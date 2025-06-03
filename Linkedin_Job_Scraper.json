@@ -1,0 +1,915 @@
+{
+  "name": "Linkedin Job Scraper",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.apify.com/v2/acts/{{ $json.actor_id }}/runs",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.Api }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.Json }}",
+        "options": {}
+      },
+      "id": "9064cbcd-793f-4998-a27c-523c0192866a",
+      "name": "Run Actor",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        60,
+        -100
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "UtjiWtUNLXhNXcxF",
+          "name": "Header Auth account"
+        },
+        "httpBasicAuth": {
+          "id": "WJwTucRei4MbPPgk",
+          "name": "Unnamed credential"
+        },
+        "httpQueryAuth": {
+          "id": "Rd2udYKSWsDKcK5n",
+          "name": "Query Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.apify.com/v2/actor-runs/{{ $json.data.id }}?waitForFinish=1000",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer apify_api_fOEBvAOyEnRJiaO73C0mN3KCKAmSre0WXDWD"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "59e8a45f-6cbb-447e-9849-4a9959c27dc1",
+      "name": "Actor Completed?",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        280,
+        -100
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "UtjiWtUNLXhNXcxF",
+          "name": "Header Auth account"
+        },
+        "httpBasicAuth": {
+          "id": "WJwTucRei4MbPPgk",
+          "name": "Unnamed credential"
+        },
+        "httpQueryAuth": {
+          "id": "Rd2udYKSWsDKcK5n",
+          "name": "Query Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.apify.com/v2/datasets/{{ $json.data.defaultDatasetId }}/items?format=json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer apify_api_fOEBvAOyEnRJiaO73C0mN3KCKAmSre0WXDWD"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1ad07f6c-d889-42c3-a212-24eff9bf65c8",
+      "name": "Get Data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        780,
+        -100
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "UtjiWtUNLXhNXcxF",
+          "name": "Header Auth account"
+        },
+        "httpBasicAuth": {
+          "id": "WJwTucRei4MbPPgk",
+          "name": "Unnamed credential"
+        },
+        "httpQueryAuth": {
+          "id": "Rd2udYKSWsDKcK5n",
+          "name": "Query Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Apify\n",
+        "height": 260,
+        "width": 640
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        -180
+      ],
+      "typeVersion": 1,
+      "id": "bd226be0-e42f-43de-a7bb-5a90adf55df4",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1b05fdbd-62c2-4c46-91c2-354e0d22187f",
+              "name": "Api",
+              "value": "apify_api_OVy5tRf9nZNhLzUtg1k9wEAGoPe7sr1qUxVj",
+              "type": "string"
+            },
+            {
+              "id": "9e5a20d6-c6b2-4097-806e-d74c0d362d19",
+              "name": "actor_id",
+              "value": "hKByXkMQaC5Qt9UMN",
+              "type": "string"
+            },
+            {
+              "id": "95b6a410-3cdf-4b80-879e-17e96c5cbf0c",
+              "name": "Json",
+              "value": "={\n    \"count\": 100,\n    \"scrapeCompany\": true,\n    \"urls\": [\n        \"{{ $json['Start URL'] }}\"\n    ]\n}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -260,
+        -100
+      ],
+      "id": "acbf3ae1-7c4e-40ed-a6cc-9ad04750f72f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -700,
+        -100
+      ],
+      "id": "990e9bbf-5182-48ab-9045-4d6fa8d6bd2b",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8e51c056-ac01-4848-b145-e993896cd2f3",
+              "name": "Start URL",
+              "value": "https://www.linkedin.com/jobs/search/?currentJobId=4127522408&f_E=1%2C2%2C3&keywords=marketing%20specialist",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -460,
+        -100
+      ],
+      "id": "9662ffb6-531e-437b-afdf-568a221b3dc1",
+      "name": "Start URL"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appOzKeU8CTlK8vhc",
+          "mode": "list",
+          "cachedResultName": "Js",
+          "cachedResultUrl": "https://airtable.com/appOzKeU8CTlK8vhc"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblDwBNkUUf0d4NCi",
+          "mode": "list",
+          "cachedResultName": "Imported table",
+          "cachedResultUrl": "https://airtable.com/appOzKeU8CTlK8vhc/tblDwBNkUUf0d4NCi"
+        },
+        "filterByFormula": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1040,
+        -260
+      ],
+      "id": "2b5c901b-6ded-417d-981c-0bf3c917499c",
+      "name": "Get Airtable",
+      "executeOnce": true,
+      "alwaysOutputData": false,
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "HtiDeIMG5ChAINRT",
+          "name": "Airtable Personal Access Token account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "jobid",
+              "field2": "id"
+            }
+          ]
+        },
+        "resolve": "preferInput2",
+        "fuzzyCompare": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.compareDatasets",
+      "typeVersion": 2.3,
+      "position": [
+        1280,
+        -140
+      ],
+      "id": "35f52301-74e2-4393-aed8-abb4eb0860dd",
+      "name": "Compare Datasets"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Your Job is to Summarize a job description  and summarize it in maximum 250 characters ",
+              "role": "system"
+            },
+            {
+              "content": "=Here is the description: \n{{ $json.descriptionText }}\n\nSummarize it in maximum of 250 characters"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1580,
+        -80
+      ],
+      "id": "ead371c5-1137-464c-8530-d418c4531fa3",
+      "name": "AI Job Summary",
+      "credentials": {
+        "openAiApi": {
+          "id": "FL7mJYhzxUlVNyAU",
+          "name": "N8N 2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Your Job get a job summary and compare it to the description of a candidate. You will give a \"Match Level from 5 (super low, basically not a match at all) to 100 (Perfect match)\".\n\nOutput only the number.",
+              "role": "system"
+            },
+            {
+              "content": "=Here is the description of the job:\n{{ $('Get Data').item.json.descriptionText }}\n\nHere is a summary of the Candidate:\n\nProfessional Profile:\n\nMarketing Specialist with strong focus on digital marketing and marketing automation\nExtensive hands-on experience with major marketing platforms (HubSpot, Meta, LinkedIn, Google)\nProven track record in lead generation and campaign management\nMultilingual: Fluent in English and Bulgarian, currently learning Dutch\nProfessional Experience:\n\nMarketing Specialist at Sciential Digital Marketing (September 2023 - March 2024)\nKey Achievements:\nDelivered 100%+ increase in Webinar registrations\nManaged comprehensive digital marketing campaigns\nExpertise in:\nEmail marketing campaigns\nLead generation strategies\nSocial media management\nHubSpot automation\nGoogle Display and LinkedIn campaign management\nWeb development and landing page creation\nDigital Content Intern at Intersport (February 2023 - September 2023)\nKey Responsibilities:\nDigital content management\nContent portal administration\nAdvanced Excel usage\nPhotoshop content creation\nProject management\nContent optimization\nGym Reception at SportCity (June 2022 - Present)\nDeveloped Skills:\nCustomer service excellence\nSales techniques\nMulti-tasking capabilities\nProblem-solving\nTeam collaboration\nMembership management\nTechnical Skills:\n\nMarketing Platforms: HubSpot, Meta, LinkedIn, Google Ads\nDesign Tools: Photoshop, Canva\nCMS: WordPress\nSEO Tools: SEMrush\nAutomation: Zapier\nAnalytics: Google Analytics\nProject Management Tools\nMicrosoft Excel\nCertifications:\n\nGoogle Analytics\nGoogle Display\nGoogle Search\nHubSpot Marketing Software Certified\nEducation:\n\nBachelor's in International Business & Management with Marketing focus\nHogeschool Rotterdam (RBS) (2019-2024)\nCore Competencies:\n\nDigital Marketing Strategy\nMarketing Automation\nLead Generation\nEmail Marketing\nWeb Development\nAdvertising Campaign Management\nContent Creation\nSocial Media Management\nCustomer Relationship Management\nThis profile would be particularly attractive for:\n\nDigital Marketing Agencies\nIn-house marketing departments\nSaaS companies\nE-commerce businesses\nMarketing technology companies\nYour combination of technical marketing skills, practical experience with major platforms, and proven results (100% increase in webinar registrations) makes you a strong candidate for mid-level digital marketing positions, particularly those focusing on marketing automation, lead generation, and multi-channel campaign management."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1960,
+        -80
+      ],
+      "id": "a773dd50-361e-4c7a-8dfc-c255f827e1cf",
+      "name": "Match Level",
+      "credentials": {
+        "openAiApi": {
+          "id": "FL7mJYhzxUlVNyAU",
+          "name": "N8N 2025"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 3,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        500,
+        -100
+      ],
+      "id": "7ed0e825-9b5f-430f-a44f-92d4e53037b5",
+      "name": "Wait",
+      "webhookId": "09ded132-df8c-4d7d-a1a9-5cd3726283ad"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appOzKeU8CTlK8vhc",
+          "mode": "list",
+          "cachedResultName": "Js",
+          "cachedResultUrl": "https://airtable.com/appOzKeU8CTlK8vhc"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblDwBNkUUf0d4NCi",
+          "mode": "list",
+          "cachedResultName": "Imported table",
+          "cachedResultUrl": "https://airtable.com/appOzKeU8CTlK8vhc/tblDwBNkUUf0d4NCi"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Get Data').item.json.id }}",
+            "descriptionText": "={{ $('Get Data').item.json.descriptionText }}",
+            "Match Level": "={{$json.message.content | toNumber}}",
+            "Short Job Summary ": "={{ $('AI Job Summary').item.json.message.content }}",
+            "seniorityLevel": "={{ $('Get Data').item.json.seniorityLevel }}",
+            "jobFunction": "={{ $('Get Data').item.json.jobFunction }}",
+            "location": "={{ $('Get Data').item.json.location }}",
+            "link": "={{ $('Get Data').item.json.link }}",
+            "applicantsCount": "={{ $('Get Data').item.json.applicantsCount }}",
+            "applyUrl": "={{ $('Get Data').item.json.applyUrl }}",
+            "postedAt": "={{ $('Get Data').item.json.postedAt }}",
+            "jobPosterName": "={{ $('Get Data').item.json.jobPosterName }}",
+            "jobPosterTitle": "={{ $('Get Data').item.json.jobPosterTitle }}",
+            "jobPosterProfileUrl": "={{ $('Get Data').item.json.jobPosterProfileUrl }}",
+            "companyName": "={{ $('Get Data').item.json.companyName }}",
+            "companyDescription": "={{ $('Get Data').item.json.companyDescription }}",
+            "companyLinkedinUrl": "={{ $('Get Data').item.json.companyLinkedinUrl }}",
+            "companyWebsite": "={{ $('Get Data').item.json.companyWebsite }}",
+            "employmentType": "={{ $('Get Data').item.json.employmentType }}",
+            "jobid": "={{ $('Get Data').item.json.id }}",
+            "industries": "={{ $('Get Data').item.json.industries }}",
+            "refId": "={{ $('Get Data').item.json.refId }}",
+            "trackingId": "={{ $('Get Data').item.json.trackingId }}",
+            "inputUrl": "={{ $('Get Data').item.json.inputUrl }}",
+            "title": "={{ $('Get Data').item.json.title }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Match Level",
+              "displayName": "Match Level",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "descriptionText",
+              "displayName": "descriptionText",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Short Job Summary ",
+              "displayName": "Short Job Summary ",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "seniorityLevel",
+              "displayName": "seniorityLevel",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "jobFunction",
+              "displayName": "jobFunction",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "applyUrl",
+              "displayName": "applyUrl",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "applicantsCount",
+              "displayName": "applicantsCount",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "postedAt",
+              "displayName": "postedAt",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "-",
+              "displayName": "-",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "jobPosterName",
+              "displayName": "jobPosterName",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "jobPosterProfileUrl",
+              "displayName": "jobPosterProfileUrl",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "jobPosterTitle",
+              "displayName": "jobPosterTitle",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "- 2",
+              "displayName": "- 2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "companyName",
+              "displayName": "companyName",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "companyDescription",
+              "displayName": "companyDescription",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "companyEmployeesCount",
+              "displayName": "companyEmployeesCount",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "companyLinkedinUrl",
+              "displayName": "companyLinkedinUrl",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "companySlogan",
+              "displayName": "companySlogan",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "companyWebsite",
+              "displayName": "companyWebsite",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "employmentType",
+              "displayName": "employmentType",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "jobid",
+              "displayName": "jobid",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "industries",
+              "displayName": "industries",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "refId",
+              "displayName": "refId",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "salaryInfo/0",
+              "displayName": "salaryInfo/0",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "trackingId",
+              "displayName": "trackingId",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "inputUrl",
+              "displayName": "inputUrl",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        2300,
+        -80
+      ],
+      "id": "5ae14c41-3307-4119-bb68-b9e4089acd89",
+      "name": "Airtable",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "HtiDeIMG5ChAINRT",
+          "name": "Airtable Personal Access Token account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Run Actor": {
+      "main": [
+        [
+          {
+            "node": "Actor Completed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actor Completed?": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Start URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start URL": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Run Actor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Data": {
+      "main": [
+        [
+          {
+            "node": "Get Airtable",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Get Airtable": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compare Datasets": {
+      "main": [
+        [],
+        [],
+        [],
+        [
+          {
+            "node": "AI Job Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Job Summary": {
+      "main": [
+        [
+          {
+            "node": "Match Level",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Match Level": {
+      "main": [
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "08de1914-82d9-4663-bfd3-c2c58899e6fa",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b4fd4bb3d80f65e71c0712d0fc47fc08cde0bb41f22639e75fa0eb7a37a2c344"
+  },
+  "id": "SToDHIsLTBL7Rr1C",
+  "tags": []
+}
